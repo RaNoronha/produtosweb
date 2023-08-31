@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { AuthenticationGuard } from './_guards/authentication.guard';
+import { SigninGuard } from './_guards/sigin.guard';
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 import { ConsultaProdutosComponent } from './consulta-produtos/consulta-produtos.component';
 import { EdicaoProdutosComponent } from './edicao-produtos/edicao-produtos.component';
@@ -20,13 +22,13 @@ import { RecuperarsenhaUsuarioComponent } from './recuperarsenha-usuario/recuper
 const routes: Routes =[
   { path : '', pathMatch : 'full', redirectTo : 'login-usuarios' },
 
-  { path : 'login-usuarios', component: LoginUsuariosComponent },
-  { path : 'cadastrar-usuarios', component: CadastrarUsuarioComponent },
-  { path : 'alterar-usuarios', component: AlterarUsuariosComponent },
-  { path : 'recuperarsenha-usuarios', component: RecuperarsenhaUsuarioComponent },
-  { path:'cadastro-produtos', component: CadastroProdutosComponent },
-  { path:'consulta-produtos', component: ConsultaProdutosComponent },
-  { path:'edicao-produtos/:id', component: EdicaoProdutosComponent }
+  { path : 'login-usuarios', component: LoginUsuariosComponent, canActivate:[SigninGuard] },
+  { path : 'cadastrar-usuarios', component: CadastrarUsuarioComponent, canActivate:[SigninGuard] },
+  { path : 'alterar-usuarios', component: AlterarUsuariosComponent, canActivate:[AuthenticationGuard] },
+  { path : 'recuperarsenha-usuarios', component: RecuperarsenhaUsuarioComponent, canActivate:[SigninGuard] },
+  { path : 'cadastro-produtos', component: CadastroProdutosComponent, canActivate:[AuthenticationGuard] },
+  { path : 'consulta-produtos', component: ConsultaProdutosComponent, canActivate:[AuthenticationGuard] },
+  { path : 'edicao-produtos/:id', component: EdicaoProdutosComponent, canActivate:[AuthenticationGuard] }
 ]
 
 @NgModule({
